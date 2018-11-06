@@ -1,4 +1,4 @@
-version: "2.0"
+version: "2.1"
 services:
   students-ms:
     build: .
@@ -6,18 +6,9 @@ services:
       - "3001:3001"
     depends_on:
       students-db:
-        condition: service_healthy
-    healthcheck:
-      test: "curl -I students-ms:3001/students-ms/resources/students/ --fail"
-      interval: 20s
-      retries: 10
+        condition: service_healthy  
   students-db:
-    image: mysql:5.7
-    healthcheck:
-      test: "mysqlcheck -u$$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE"
-      interval: 20s
-      timeout: 5s
-      retries: 15
+    image: mysql:5.7  
     environment:
       MYSQL_ROOT_PASSWORD: 123
       MYSQL_DATABASE: students-db
